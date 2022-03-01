@@ -3,20 +3,12 @@ import { enLocale } from "./utils/locale";
 
 import { ConfigProvider } from "antd";
 import ProTableAntd, { createIntl, IntlProvider } from "@ant-design/pro-table";
-import { CSVLink } from 'react-csv'
 
 import Button from "../Button";
 import EmptyState from "../EmptyState";
+import ButtonCSV from "../ButtonCSV";
 
 const ptBRIntl = createIntl("pt-BR", enLocale);
-
-const data = [
-  {
-    id: "1",
-    username: "teste_01",
-    name: "Nome Sobrenome 01",
-    createdAt: "02/02/2022",
-  }]
 
 const ButtonAction = ({
   type,
@@ -28,10 +20,10 @@ const ButtonAction = ({
 
   if (type === 'export') {
     return (
-      <CSVLink data={`${data}`} className="button exportButton">
-        {iconButton}
-        {`${textButton}`}
-      </CSVLink>
+      <ButtonCSV
+        iconButton={iconButton}
+        textButton={textButton}
+      />
     );
   }
 

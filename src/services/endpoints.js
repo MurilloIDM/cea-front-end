@@ -14,7 +14,8 @@ ROUTES[ADMINISTRATOR] = {
 
 ROUTES[LEADS] = {
   listPerPage: (queries) => `/leads/?${formatQuery(queries)}`,
-  create: () => "/leads/"
+  create: () => "/leads/",
+  listAll: () => "/leads/all",
 }
 
 export {
