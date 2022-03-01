@@ -1,6 +1,7 @@
 import { formatQuery } from "../utils/formatQuery";
 
 const ADMINISTRATOR = "Administrator";
+const LEADS = "Leads"
 
 const ROUTES = [];
 
@@ -11,7 +12,13 @@ ROUTES[ADMINISTRATOR] = {
   delete: (id) => `/administrators/${id}`
 };
 
+ROUTES[LEADS] = {
+  listPerPage: (queries) => `/leads/?${formatQuery(queries)}`,
+  create: () => "/leads/"
+}
+
 export {
   ROUTES,
   ADMINISTRATOR,
+  LEADS
 };
