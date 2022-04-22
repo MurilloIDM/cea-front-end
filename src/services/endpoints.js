@@ -3,6 +3,7 @@ import { formatQuery } from "../utils/formatQuery";
 const ADMINISTRATOR = "Administrator";
 const FREEPOST = "Freepost";
 const LEADS = "Leads";
+const STUDENTS = "Students";
 
 const ROUTES = [];
 
@@ -24,10 +25,15 @@ ROUTES[LEADS] = {
   listPerPage: (queries) => `/leads/?${formatQuery(queries)}`,
   listAll: () => "/leads/all",
 }
+ROUTES[STUDENTS] = {
+  listPerPage: (queries) => `/students/?${formatQuery(queries)}`,
+  getById: (id) => `/student/${id}`,
+}
 
 export {
   ROUTES,
   ADMINISTRATOR,
   FREEPOST,
   LEADS,
+  STUDENTS
 };

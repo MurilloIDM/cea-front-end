@@ -16,7 +16,7 @@ const Login = () => {
 
   const onFinish = (values) => {
     console.log('Success:', values);
-    navigate("/leads/listagem");
+    navigate("/recuperacao-senha");
   };
 
   const onFinishFailed = (errorInfo) => {
