@@ -145,7 +145,6 @@ const StudentList = () => {
       render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];
-
   return (
     <div>
       <Loader loading={loading} />
