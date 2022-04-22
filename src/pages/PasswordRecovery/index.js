@@ -12,12 +12,11 @@ import styles from "./styles.module.css";
 const { Item } = Form;
 
 
-function validateRepeteKey(values) {
+function validateRepeteKey (values) {
   // console.log('Success:', values);
   const errorRepeteKey = {};
   if (values.newPassword != values.repeteNewPassword)
-    errorRepeteKey.repeteNewPassword = "As senhas devem ser iguais, digite-a novamente.";
-  console.log('Success:', values);
+  errorRepeteKey.repeteNewPassword = "As senhas devem ser iguais, digite-a novamente.";
   console.log(errorRepeteKey.repeteNewPassword);
 
   return errorRepeteKey;
@@ -30,19 +29,19 @@ const PasswordRecovery = () => {
 
   const onFinish = (values) => {
     // console.log('Success:', values);
-
+    
     validateRepeteKey(values);
-    // console.log(errorRepeteKey);
-    // console.log('Error:', values);
+    console.log(errorRepeteKey);
 
-    // if (errorRepeteKey.repeteNewPassword != "As senhas devem ser iguais, digite-a novamente."){
-    //   console.log('Success:', values);
-    //   // navigate("/leads/listagem");
-    // }
-    //   else {
-    //     console.log(errorRepeteKey.repetePassword);
-
-    // }
+    if (errorRepeteKey.repeteNewPassword != "As senhas devem ser iguais, digite-a novamente."){
+      console.log('Success:', values);
+      // navigate("/leads/listagem");
+    }
+    else {
+      console.log('Error:', values);
+      console.log(errorRepeteKey.repetePassword);
+  
+  }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -100,7 +99,7 @@ const PasswordRecovery = () => {
           <Input.Password
             prefix={<LockOutlined />}
             placeholder="Digite a nova senha novamente" />
-
+          
           {/* <div>
             {errorRepeteKey.repetePassword && <span className="">{errorRepeteKey.repetePassword}</span>}
           </div> */}
