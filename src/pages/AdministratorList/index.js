@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { PageHeader } from "antd";
 import { useNavigate } from "react-router-dom";
-import { EditOutlined, DeleteFilled, PlusOutlined, WarningOutlined } from "@ant-design/icons";
+import { EditFilled, DeleteFilled, PlusOutlined, WarningOutlined, LockFilled } from "@ant-design/icons";
 
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -66,6 +66,8 @@ const AdministratorList = () => {
   }
 
   const navigateAdministratorRegister = () => navigate("/administradores/cadastro");
+  
+  const passwordRecovery = () => navigate("/recuperacao-senha")
   const handleEdit = (record) => navigate(`/administradores/edicao/${record.id}`, { state: { record }});
 
   const handleCloseModalError = () => setModalError(false);
@@ -105,9 +107,14 @@ const AdministratorList = () => {
 
   const actionsTable = [
     {
+      name: "Recuperar senha",
+      func: passwordRecovery,
+      icon: <LockFilled/>
+    },
+    {
       name: "Editar",
       func: handleEdit,
-      icon: <EditOutlined className="iconUpdate" />,
+      icon: <EditFilled className="iconUpdate" />,
     },
     {
       name: "Deletar",
@@ -145,7 +152,7 @@ const AdministratorList = () => {
     {
       title: "Ações",
       valueType: "option",
-      width: "230px",
+      width: "380px",
       render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];

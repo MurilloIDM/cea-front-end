@@ -161,10 +161,12 @@ body {
 
 .iconUpdate svg {
   color: #FAAD14;
+  margin-left: 18px;
 }
 
 .iconDelete svg {
   color: #FF4D4F;
+  margin-left: 18px;
 }
 
 .iconAlertStatusAtivo {
