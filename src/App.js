@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 
 import Login from "./pages/Login";
-import LeadsList from "./pages/LeadsList";
-import FreePostList from "./pages/FreePostList";
+import PasswordRecovery from "./pages/PasswordRecovery";
 import AdministratorList from "./pages/AdministratorList";
-import FreePostListRegister from "./pages/FreePostRegister";
 import AdministratorRegister from "./pages/AdministratorRegister";
+import FreePostList from "./pages/FreePostList";
+import FreePostListRegister from "./pages/FreePostRegister";
+import LeadsList from "./pages/LeadsList";
+import StudentList from "./pages/StudentList";
 
 import "./styles/less/common.less";
 
@@ -30,6 +32,16 @@ function App() {
             </PrivateRoute>
           )}
           path="/administradores/listagem"
+        />
+
+        <Route
+          element={<Login />}
+          path="/"
+        />
+
+        <Route
+          element={<PasswordRecovery />}
+          path="/recuperacao-senha"
         />
 
         <Route
@@ -87,9 +99,14 @@ function App() {
         />
 
         <Route
-          element={<Login />}
-          path="/"
+          element={(
+            <PrivateRoute>
+              <StudentList />
+            </PrivateRoute>
+          )}
+          path="/students/listagem"
         />
+
       </Routes >
     </BrowserRouter >
   );

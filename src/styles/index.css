@@ -166,3 +166,13 @@ body {
 .iconDelete svg {
   color: #FF4D4F;
 }
+
+.iconAlertStatusAtivo {
+  color: #47d600;
+}
+.iconAlertStatusInativo {
+  color: #FF1313;
+}
+.iconAlertStatusInativoEmBreve {
+  color: #FAAD14;
+}
