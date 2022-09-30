@@ -5,6 +5,7 @@ import { ExportOutlined } from "@ant-design/icons"
 import ProTable from "../../components/ProTable";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
+import ModalDateFilter from "../../components/Modal/components/ModalDateFilter"
 
 import { LeadService } from "../../services";
 
@@ -27,9 +28,12 @@ const routes = [
 const LeadsList = () => {
   const [modalError, setModalError] = useState(false);
   const [messageError, setMessageError] = useState({});
-
+  const [modalDateFilter, setModalDateFilter] = useState(true);
 
   const handleCloseModalError = () => setModalError(false);
+  const handleCloseModalDateFilter = () => setModalDateFilter(false);
+  const openModalDateFilter = () => setModalDateFilter(true)
+
   const tableRef = useRef();
 
   const getData = async ({ current, pageSize, name }) => {
@@ -124,6 +128,18 @@ const LeadsList = () => {
           <p className="modalMessageAlert">{messageError?.text}</p>
         </div>
       </ModalError>
+      <ModalDateFilter
+      title="Selecione o período desejado para o download."
+      buttons={[{
+      text: "Cancelar",
+      styles: "buttonDefault",
+      handleClick: handleCloseModalDateFilter
+      }]}
+      visible={modalDateFilter}
+      onCloseModal={handleCloseModalDateFilter}
+      >
+
+      </ModalDateFilter>
     </div>
   );
 }
