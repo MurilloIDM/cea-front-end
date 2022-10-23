@@ -7,12 +7,13 @@ const ButtonAction = ({
   textButton,
   actionButton,
   stylesButton,
+  onClick
 }) => {
   if (type === "export") {
     return (
       <ButtonCSV
         iconButton={iconButton}
-        textButton={` ${textButton}`}
+        textButton={`${textButton}`}
         stylesButton={stylesButton}
       />
     );
@@ -23,6 +24,7 @@ const ButtonAction = ({
       type={type}
       handleClick={actionButton}
       stylesButton={stylesButton}
+      onClick={onClick}
     >
       {iconButton}
       {` ${textButton}`}

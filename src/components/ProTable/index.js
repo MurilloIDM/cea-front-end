@@ -18,7 +18,7 @@ const ProTable = ({
   dataSource,
   typeButton,
   stylesButton,
-  actionButton,
+  onClick,
   ...props
 }) => {
   const toolbar = {
@@ -28,8 +28,8 @@ const ProTable = ({
           type={typeButton}
           textButton={textButton}
           iconButton={iconButton}
-          actionButton={actionButton}
           stylesButton={stylesButton}
+          onClick={onClick}
         />
       )
     ],

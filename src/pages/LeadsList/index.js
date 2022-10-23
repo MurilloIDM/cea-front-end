@@ -36,6 +36,10 @@ const LeadsList = () => {
 
   const tableRef = useRef();
 
+  const actionButton = () =>{
+    console.log("teste")
+  }
+
   const getData = async ({ current, pageSize, name }) => {
     const query = {
       direction: "ASC",
@@ -104,13 +108,27 @@ const LeadsList = () => {
           rowKey="id"
           columns={columns}
           textButton="Exportar"
+          typeButton="teste"
+          request={getData}
+          actionRef={tableRef}
+          onClick={actionButton}
+          stylesButton={`${styles.csvButton} ${styles.exportButton}`}
+          iconButton={<ExportOutlined className={styles.iconPadding} />}
+        />
+      </div>
+      {/* <div className={styles.containerTable}>
+        <ProTable
+          search={false}
+          rowKey="id"
+          columns={columns}
+          textButton="Exportar"
           typeButton="export"
           request={getData}
           actionRef={tableRef}
           stylesButton={`${styles.csvButton} ${styles.exportButton}`}
           iconButton={<ExportOutlined className={styles.iconPadding} />}
         />
-      </div>
+      </div> */}
 
       <ModalError
         visible={modalError}
