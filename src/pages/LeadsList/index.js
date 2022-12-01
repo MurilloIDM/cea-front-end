@@ -28,17 +28,14 @@ const routes = [
 const LeadsList = () => {
   const [modalError, setModalError] = useState(false);
   const [messageError, setMessageError] = useState({});
-  const [modalDateFilter, setModalDateFilter] = useState(true);
+  const [modalDateFilter, setModalDateFilter] = useState(false);
 
   const handleCloseModalError = () => setModalError(false);
+  // const handleCloseModalDateFilter = () => console.log("teste");
   const handleCloseModalDateFilter = () => setModalDateFilter(false);
   const openModalDateFilter = () => setModalDateFilter(true)
 
   const tableRef = useRef();
-
-  const actionButton = () =>{
-    console.log("teste")
-  }
 
   const getData = async ({ current, pageSize, name }) => {
     const query = {
@@ -86,7 +83,7 @@ const LeadsList = () => {
       dataIndex: "email",
       ellipsis: true,
     },
-  
+
     {
       title: "Data de Criação",
       dataIndex: "createdAt",
@@ -111,7 +108,7 @@ const LeadsList = () => {
           typeButton="teste"
           request={getData}
           actionRef={tableRef}
-          onClick={actionButton}
+          onClick={openModalDateFilter}
           stylesButton={`${styles.csvButton} ${styles.exportButton}`}
           iconButton={<ExportOutlined className={styles.iconPadding} />}
         />
@@ -131,6 +128,9 @@ const LeadsList = () => {
       </div> */}
 
       <ModalError
+        iconButton={<ExportOutlined className={styles.iconPadding} />}
+        textButton="Confirmar exportação"
+        stylesButton={`${styles.csvButton} ${styles.exportButton}`}
         visible={modalError}
         buttons={[{
           text: "Fechar",
@@ -146,15 +146,20 @@ const LeadsList = () => {
           <p className="modalMessageAlert">{messageError?.text}</p>
         </div>
       </ModalError>
+
       <ModalDateFilter
-      title="Selecione o período desejado para o download."
-      buttons={[{
-      text: "Cancelar",
-      styles: "buttonDefault",
-      handleClick: handleCloseModalDateFilter
-      }]}
-      visible={modalDateFilter}
-      onCloseModal={handleCloseModalDateFilter}
+        title="Selecione o período desejado para o download."
+        style={{
+          top: 20,
+        }}
+        buttons={[{
+          text: "Cancelar",
+          styles: "buttonDefault",
+          handleClick: handleCloseModalDateFilter,
+        }]}
+        visible={modalDateFilter}
+        onCloseModal={handleCloseModalDateFilter}
+        textButton={"textButton"}
       >
 
       </ModalDateFilter>
