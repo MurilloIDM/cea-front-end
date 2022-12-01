@@ -13,12 +13,16 @@
     width: calc(100% - 32px) !important;
 }
 
-.containerTableMedia, .containerTableTopics {
+.containerTableMedia, .containerTableTopics, .containerTableLink {
     width: 500px;
     margin-bottom: 24px;
 }
 
-.tableMedia, .tableTopic {
+.containerTableLink {
+    margin-top: 12px;
+}
+
+.tableMedia, .tableTopic, .tableLink {
     width: 100%;
     border-radius: 4px;
     background-color: #E5E5E5;
@@ -47,17 +51,12 @@
     cursor: not-allowed !important;
 }
 
-.tableMedia th, .tableTopic th {
+.tableMedia th, .tableTopic th, .tableLink th {
     padding: 6px 12px;
     text-align: left;
 }
 
-.tableMedia td {
-    padding: 6px 12px;
-    text-align: left;
-}
-
-.tableTopic td {
+.tableMedia td, .tableTopic td, .tableLink td {
     padding: 6px 12px;
     text-align: left;
 }
@@ -108,3 +107,6 @@ td.createTopic:hover {
     margin-bottom: 6px;
 }
 
+.containerIconDeleteLink {
+    width: 62.66px;
+}

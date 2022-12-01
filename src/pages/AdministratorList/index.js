@@ -1,7 +1,7 @@
-import {useRef, useState} from "react";
-import {PageHeader} from "antd";
-import {useNavigate} from "react-router-dom";
-import {EditFilled, DeleteFilled, PlusOutlined, WarningOutlined, LockFilled} from "@ant-design/icons";
+import { useRef, useState } from "react";
+import { PageHeader } from "antd";
+import { useNavigate } from "react-router-dom";
+import { EditFilled, DeleteFilled, PlusOutlined, WarningOutlined, LockFilled } from "@ant-design/icons";
 
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -10,11 +10,11 @@ import ActionTable from "../../components/ActionTable";
 import ColumnDateTable from "../../components/ColumnDateTable";
 import RouterBreadcrumb from "../../components/RouterBreadcrumb";
 import ModalError from "../../components/Modal/components/ModalError";
+import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
-import {AdministratorService} from "../../services";
+import { AdministratorService } from "../../services";
 
 import styles from "./styles.module.css";
-import ModalSuccess from "../../components/Modal/components/ModalSuccess";
 
 const routes = [
   {
@@ -42,9 +42,9 @@ const AdministratorList = () => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [modalErrorPassword, setModalErrorPassword] = useState(false);
 
-  const getData = async ({current, pageSize, name}) => {
+  const getData = async ({ current, pageSize, name }) => {
     const query = {
-      direction: "ASC",
+      direction: "DESC",
       page: current - 1,
       orderBy: "createdAt",
       linesPerPage: pageSize,
@@ -53,7 +53,7 @@ const AdministratorList = () => {
     if (name) query.name = name;
 
     try {
-      const {data} = await AdministratorService.listPerPage(query);
+      const { data } = await AdministratorService.listPerPage(query);
 
       return {
         success: true,
@@ -74,12 +74,12 @@ const AdministratorList = () => {
   const passwordRecovery = async (username) => {
     setLoading(true);
 
-    const payload = {username};
+    const payload = { username };
 
     try {
-      const {data} = await AdministratorService.generatePassword(payload);
+      const { data } = await AdministratorService.generatePassword(payload);
 
-      setDataCurrent({username: data?.username, password: data?.password});
+      setDataCurrent({ username: data?.username, password: data?.password });
       setModalSuccess(true);
     } catch (e) {
       setModalErrorPassword(true);
@@ -88,7 +88,7 @@ const AdministratorList = () => {
     }
   }
 
-  const handleEdit = (record) => navigate(`/administradores/edicao/${record.id}`, {state: {record}});
+  const handleEdit = (record) => navigate(`/administradores/edicao/${record.id}`, { state: { record } });
 
   const handleCloseModalError = () => setModalError(false);
   const handleCloseModalDelete = () => setOpenModalDelete(false);
@@ -139,12 +139,12 @@ const AdministratorList = () => {
     {
       name: "Recuperar senha",
       func: (record) => passwordRecovery(record?.username),
-      icon: <LockFilled/>
+      icon: <LockFilled />
     },
     {
       name: "Editar",
       func: handleEdit,
-      icon: <EditFilled className="iconUpdate"/>,
+      icon: <EditFilled className="iconUpdate" />,
     },
     {
       name: "Deletar",
@@ -152,7 +152,7 @@ const AdministratorList = () => {
         setCurrentDelete(record.id);
         setOpenModalDelete(true);
       },
-      icon: <DeleteFilled className="iconDelete"/>,
+      icon: <DeleteFilled className="iconDelete" />,
     }
   ];
 
@@ -177,23 +177,23 @@ const AdministratorList = () => {
       width: "160px",
       hideInSearch: true,
       ellipsis: true,
-      render: (_, record) => <ColumnDateTable date={record?.createdAt} formatDate="DD/MM/YYYY" adapt/>
+      render: (_, record) => <ColumnDateTable date={record?.createdAt} formatDate="DD/MM/YYYY" adapt />
     },
     {
       title: "Ações",
       valueType: "option",
       width: "380px",
-      render: ({props}) => <ActionTable actions={actionsTable} record={props.record}/>,
+      render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];
 
   return (
     <div>
-      <Loader loading={loading}/>
+      <Loader loading={loading} />
 
       <PageHeader
         title="Listagem de Administradores"
-        breadcrumbRender={() => <RouterBreadcrumb routes={routes}/>}
+        breadcrumbRender={() => <RouterBreadcrumb routes={routes} />}
       />
 
       <div className={styles.containerTable}>
@@ -202,7 +202,7 @@ const AdministratorList = () => {
           columns={columns}
           textButton="Cadastrar Novo"
           stylesButton="buttonPrimary"
-          iconButton={<PlusOutlined/>}
+          iconButton={<PlusOutlined />}
           actionButton={navigateAdministratorRegister}
           request={getData}
           actionRef={tableRef}
@@ -232,7 +232,7 @@ const AdministratorList = () => {
         onCloseModal={handleCloseModalDelete}
       >
         <div className="messageModalDelete">
-          <WarningOutlined/>
+          <WarningOutlined />
 
           <p><b>Atenção!</b></p>
           <p>Ao deletar o registro atual não é possível recuperá-lo!</p>

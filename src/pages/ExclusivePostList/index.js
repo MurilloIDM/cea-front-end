@@ -52,7 +52,7 @@ const ExclusivePostList = () => {
 
   const getData = async ({ current, pageSize, title, status, type }) => {
     const query = {
-      direction: "ASC",
+      direction: "DESC",
       page: current - 1,
       orderBy: "createdAt",
       linesPerPage: pageSize
@@ -90,9 +90,9 @@ const ExclusivePostList = () => {
 
     try {
       const { data: {
-       pollTopics,
-       totalVotes
-      }} = await ExclusivePostService.findPollTopics(id);
+        pollTopics,
+        totalVotes
+      } } = await ExclusivePostService.findPollTopics(id);
 
       setTitleSurveySelected(`${title} (${totalVotes})`);
       setDataSurveySelected(pollTopics);
@@ -128,15 +128,15 @@ const ExclusivePostList = () => {
   }
 
   const handleEdit = (record) => {
-    navigate(`/conteudo-exclusivo/edicao/${record.id}`, { state: { record }});
+    navigate(`/conteudo-exclusivo/edicao/${record.id}`, { state: { record } });
   }
 
   const handleDetailsSurvey = async (id, title) => {
     await getPollTopics(id, title);
   }
 
-  const handleDetailsContent = async () => {
-    console.log("Detalhes de comentários");
+  const handleDetailsContent = async (id, title, status) => {
+    navigate(`/conteudo-exclusivo/comentarios`, { state: { id, title, status } });
   }
 
   const handleCloseModalProgress = () => {
@@ -164,9 +164,9 @@ const ExclusivePostList = () => {
   const actionsTable = [
     {
       name: "Detalhes",
-      func: async ({ id, title, type }) => {
+      func: async ({ id, title, status, type }) => {
         const operationExec = type === "TEXT" ? handleDetailsContent : handleDetailsSurvey;
-        await operationExec(id, title);
+        await operationExec(id, title, status);
       },
       icon: <InfoCircleFilled />
     },

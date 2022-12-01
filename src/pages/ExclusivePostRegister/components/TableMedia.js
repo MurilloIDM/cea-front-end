@@ -11,7 +11,7 @@ const TableMedia = ({ data, handleView, handleDelete }) => {
     <table className={styles.tableMedia}>
       <thead>
         <tr>
-          <th>URL das mídias adicionadas</th>
+          <th>URL's das mídias adicionadas</th>
         </tr>
       </thead>
 

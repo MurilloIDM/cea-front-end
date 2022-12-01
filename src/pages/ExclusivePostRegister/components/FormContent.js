@@ -15,6 +15,8 @@ import useStore from "../../../hooks/useStore";
 import { ExclusivePostService } from "../../../services";
 
 import styles from "../styles.module.css";
+import TableLink from "./TableLink";
+import ModalLink from "./ModalLink";
 
 const { Item } = Form;
 const { TextArea } = Input;
@@ -24,6 +26,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
+  const [links, setLinks] = useState([]);
   const [media, setMedia] = useState([]);
   const [status, setStatus] = useState(true);
   const [urlMedia, setUrlMedia] = useState("");
@@ -34,8 +37,10 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
   const [messageError, setMessageError] = useState(false);
   const [initialValues, setInitialValues] = useState(false);
   const [errorGetMedia, setErrorGetMedia] = useState(false);
+  const [errorGetLinks, setErrorGetLinks] = useState(false);
   const [openModalImage, setOpenModalImage] = useState(false);
-
+  const [modalRegisterLink, setModalRegisterLink] = useState(false);
+  
   useEffect(() => {
     if (isEdit && !initialValues) {
       const { record: exclusivePost } = stateEdit;
@@ -49,7 +54,10 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
         description: exclusivePost?.description,
       });
 
-      (async () => await getMedia(id))();
+      (async () => {
+        await getMedia(id);
+        await getLinks(id);
+      })();
 
       setInitialValues(true);
     }
@@ -83,6 +91,23 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
     setMedia(newMedia);
   }
 
+  const removeLinks = (url) => {
+    const newLinks = [];
+
+    links.forEach((record) => {
+      if (record.url === url) {
+        if (!record.id) return;
+
+        newLinks.push({ ...record, remove: true });
+        return;
+      }
+
+      newLinks.push(record);
+    });
+
+    setLinks(newLinks);
+  }
+
   const handleSwitchStatus = () => setStatus(!status);
   const handleUrl = ({ target: { value } }) => setUrlMedia(value);
 
@@ -100,13 +125,33 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
     setUrlMedia("");
   }
 
+  const openModalRegisterLink = () => {
+    setModalRegisterLink(true);
+  }
+
+  const closedModalRegisterLink = () => {
+    setModalRegisterLink(false);
+  }
+
   const getMedia = async (id) => {
     setLoading(true);
     try {
       const { data } = await ExclusivePostService.findMedia(id);
-      setMedia(data);
+      setMedia(data ? data : []);
     } catch (e) {
       setErrorGetMedia(true);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const getLinks = async (id) => {
+    setLoading(true);
+    try {
+      const { data } = await ExclusivePostService.findLinks(id);
+      setLinks(data ? data : []);
+    } catch (e) {
+      setErrorGetLinks(true);
     } finally {
       setLoading(false);
     }
@@ -123,6 +168,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
       username,
       status,
       media,
+      links,
     };
 
     setLoading(true);
@@ -132,6 +178,8 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
       await operation(payload, idUpdate);
 
       form.resetFields();
+      setMedia([]);
+      setLinks([]);
       setModalSuccess(true);
     } catch (e) {
       const status = e?.request?.status;
@@ -164,7 +212,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           required
           name="title"
           label="Título"
-          rules={[ requiredRule ]}
+          rules={[requiredRule]}
         >
           <Input placeholder="Digite um título" />
         </Item>
@@ -173,7 +221,7 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           required
           name="description"
           label="Descrição"
-          rules={[ requiredRule ]}
+          rules={[requiredRule]}
         >
           <TextArea
             rows={4}
@@ -227,6 +275,22 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           />
         </Item>
 
+        <ButtonDefault
+          type="button"
+          disabled={errorGetLinks}
+          handleClick={openModalRegisterLink}
+          stylesButton="buttonDefault width-100"
+        >
+          Adicionar link de referência
+        </ButtonDefault>
+
+        <div className={styles.containerTableLink}>
+          <TableLink
+            data={links}
+            handleDelete={removeLinks}
+          />
+        </div>
+
         <div className="containerButtons">
           <ButtonDefault
             stylesButton="buttonBack"
@@ -260,6 +324,13 @@ const FormContent = ({ isEdit, stateEdit, id }) => {
           <img src={imageSelected} alt={`Imagem selecionada - ${imageSelected}`} />
         </div>
       </Modal>
+
+      <ModalLink
+        links={links}
+        setLinks={setLinks}
+        visible={modalRegisterLink}
+        handleClosed={closedModalRegisterLink}
+      />
 
       <ModalSuccess
         visible={modalSuccess}

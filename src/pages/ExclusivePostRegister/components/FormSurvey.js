@@ -240,6 +240,7 @@ const FormSurvey = ({ isEdit, stateEdit, id }) => {
             rows={4}
             showCount
             maxLength={2000}
+            disabled={totalVotes > 0 && isEdit}
             placeholder="Descrição da enquete"
           />
         </Item>

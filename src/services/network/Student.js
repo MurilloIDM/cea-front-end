@@ -15,6 +15,9 @@ const Student = {
   updateName: (payload, id) => {
     return ceaAPI.patch(ROUTES[STUDENTS].updateName(id), payload);
   },
+  updateDateInactivation: (payload, id) => {
+    return ceaAPI.patch(ROUTES[STUDENTS].updateDateInactivation(id), payload);
+  }
 };
 
 export default Student;

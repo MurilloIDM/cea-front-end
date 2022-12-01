@@ -1,0 +1,18 @@
+.inputCommentContainer {
+  margin-top: 24px;
+  display: flex;
+}
+
+.inputCommentContainer>div:first-of-type {
+  flex-grow: 1;
+}
+
+.sendButton {
+  height: 32px;
+  display: flex;
+}
+
+.iconSend {
+  font-size: 16px;
+  align-self: center;
+}

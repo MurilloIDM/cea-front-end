@@ -39,7 +39,7 @@ const LeadsList = () => {
 
   const getData = async ({ current, pageSize, name }) => {
     const query = {
-      direction: "ASC",
+      direction: "DESC",
       page: current - 1,
       orderBy: "createdAt",
       linesPerPage: pageSize,

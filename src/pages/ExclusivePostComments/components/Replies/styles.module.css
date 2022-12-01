@@ -1,0 +1,17 @@
+.container {
+  margin-top: 4px;
+}
+
+.studentName {
+  font-weight: bolder;
+  margin-right: 16px !important;
+}
+
+.footer {
+  margin: 16px 0px 8px 0px;
+  font-size: 12px;
+}
+
+.buttonFile {
+  padding: 0px 16px 0px 0px !important;
+}

@@ -12,3 +12,9 @@
   margin-bottom: 6px;
   font-weight: normal;
 }
+
+.dataPickerForm {
+  display: flex;
+  margin-top: 12px;
+  justify-content: center;
+}

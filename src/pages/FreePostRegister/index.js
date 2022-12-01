@@ -28,7 +28,7 @@ const FreePostRegister = ({ isEdit }) => {
   const { state } = useLocation();
 
   const [imgUrl, setImgUrl] = useState('');
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState(true);
   const [loading, setLoading] = useState(false);
   const [imgUrlOk, setImgUrlOk] = useState(true);
   const [modalError, setModalError] = useState(false);
@@ -81,7 +81,7 @@ const FreePostRegister = ({ isEdit }) => {
       title: values?.title,
       description: values?.description,
       imageUrl: values?.imageUrl,
-      status: values?.status ? true : false,
+      status,
       user: usernameAdmin,
     };
 
@@ -94,6 +94,9 @@ const FreePostRegister = ({ isEdit }) => {
       setModalSuccess(true);
 
       form.resetFields();
+      setImgUrl('');
+      setStatus(true);
+      setImgUrlOk(true);
     } catch (e) {
       const status = e?.request?.status;
 

@@ -6,6 +6,7 @@ const LEADS = "Leads";
 const AUTH = "Auth";
 const EXCLUSIVEPOST = "Exclusivepost";
 const STUDENTS = "Students";
+const COMMENTS = "Comments";
 
 const ROUTES = [];
 
@@ -43,12 +44,23 @@ ROUTES[EXCLUSIVEPOST] = {
   findPollTopics: (id) => `/admin/poll-topics/exclusive-post/${id}`,
   editContent: (id) => `/admin/exclusive-posts/content/${id}`,
   editSurvey: (id) => `/admin/exclusive-posts/survey/${id}`,
+  findLinks: (id) => `/admin/links/exclusive-post/${id}`,
 }
 
 ROUTES[STUDENTS] = {
   listPerPage: (queries) => `/admin/students/?${formatQuery(queries)}`,
   importStudents: () => '/admin/students/upload',
   updateName: (id) => `/admin/students/${id}`,
+  updateDateInactivation: (id) => `/admin/students/inactivate/${id}`
+}
+
+ROUTES[COMMENTS] = {
+  listCommentsPerPage: (queries, id) => `/admin/comments/exclusive-post/${id}/?${formatQuery(queries)}`,
+  inativeComment: () => `/admin/comments/`,
+  listRepliesPerPage: (queries, id) => `/admin/comments/${id}/comments-reply/?${formatQuery(queries)}`,
+  inativeReply: () => `/admin/comments/reply`,
+  createReply: () => `/admin/comments/reply/create`,
+  addComments: () => `/admin/comments/create`,
 }
 
 export {
@@ -59,4 +71,5 @@ export {
   AUTH,
   EXCLUSIVEPOST,
   STUDENTS,
+  COMMENTS,
 };

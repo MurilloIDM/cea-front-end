@@ -14,6 +14,7 @@ import FreePostRegister from "./pages/FreePostRegister";
 
 import ExclusivePostList from "./pages/ExclusivePostList";
 import ExclusivePostRegister from "./pages/ExclusivePostRegister";
+import ExclusivePostComments from "./pages/ExclusivePostComments";
 
 import AdministratorList from "./pages/AdministratorList";
 import AdministratorRegister from "./pages/AdministratorRegister";
@@ -86,6 +87,22 @@ function App() {
               </PrivateRoute>
             )}
             path="/conteudo-gratuito/edicao/:id"
+          />
+          <Route
+            element={(
+              <PrivateRoute>
+                <LeadsList />
+              </PrivateRoute>
+            )}
+            path="/leads/listagem"
+          />
+          <Route
+            element={(
+              <PrivateRoute>
+                <ExclusivePostComments />
+              </PrivateRoute>
+            )}
+            path="/conteudo-exclusivo/comentarios"
           />
 
           <Route

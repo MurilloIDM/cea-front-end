@@ -10,7 +10,13 @@ const Modal = ({
   buttons,
   children,
   onCloseModal,
+<<<<<<< HEAD
   style
+=======
+  bodyStyle,
+  style,
+  width
+>>>>>>> fd403fcd4215ab261e95320a5b39a834633734ef
 }) => {
 
   const footerButtons = formatFooter(buttons);
@@ -22,7 +28,13 @@ const Modal = ({
       destroyOnClose={true}
       footer={footerButtons}
       onCancel={onCloseModal}
+<<<<<<< HEAD
       style={style}
+=======
+      width={width}
+      style={style}
+      bodyStyle={bodyStyle}
+>>>>>>> fd403fcd4215ab261e95320a5b39a834633734ef
     >
       <div className="content-modal">
         {children}

@@ -40,7 +40,7 @@ const FreePostList = () => {
 
   const getData = async ({ current, pageSize, title, status }) => {
     const query = {
-      direction: "ASC",
+      direction: "DESC",
       page: current - 1,
       orderBy: "createdAt",
       linesPerPage: pageSize,
@@ -133,12 +133,7 @@ const FreePostList = () => {
       title: "Título",
       dataIndex: "title",
       key: "title",
-      ellipsis: true,
-    },
-    {
-      title: "Descrição",
-      dataIndex: "description",
-      hideInSearch: true,
+      width: "570px",
       ellipsis: true,
     },
     {
@@ -161,12 +156,14 @@ const FreePostList = () => {
           status: 'Error',
         },
       },
+      width: "130px",
     },
     {
       title: "Data de Criação",
       dataIndex: "createdAt",
       hideInSearch: true,
       ellipsis: true,
+      width: "150px",
     },
     {
       title: "Ações",

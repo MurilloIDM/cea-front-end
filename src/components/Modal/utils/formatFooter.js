@@ -11,6 +11,7 @@ export const formatFooter = (buttons) => {
           text={button.text}
           stylesButton={button.styles}
           handleClick={button.handleClick}
+          disabled={button.disabled !== undefined ? button.disabled : false}
         />
       );
     }

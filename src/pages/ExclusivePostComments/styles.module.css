@@ -1,0 +1,70 @@
+.containerComments {
+  margin: 32px 24px;
+  padding: 32px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.paginationContainer {
+  padding-bottom: 16px;
+}
+
+.postTitle {
+  position: sticky;
+  top: 48px;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px lightgrey;
+  margin: -32px -32px 24px -32px;
+  padding: 16px 32px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.postTitle h1 {
+  margin: 0px;
+  display: flex;
+  align-self: center;
+}
+
+.statusIndicator {
+  display: flex;
+}
+
+.mainTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.authorTitleModalView {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.textTitleModalView {
+  font-size: 12px;
+}
+
+.buttonBack {
+  display: block;
+  margin: auto;
+  margin-top: 24px;
+}
+
+.containerAddComment {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.containerAddComment > div:first-of-type {
+  flex-grow: 1;
+}
+
+.sendButton {
+  height: 32px;
+  display: flex;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { Input, PageHeader } from "antd";
+import { Input, PageHeader, DatePicker } from "antd";
 import _orderBy from "lodash.orderby";
-import { EditFilled, PlusOutlined } from "@ant-design/icons";
+import { EditFilled, PlusOutlined, CalendarFilled } from "@ant-design/icons";
 
 import Modal from "../../components/Modal";
 import Loader from "../../components/Loader";
@@ -20,6 +20,7 @@ import ContentModalSuccessImport from "./components/ContentModalSuccessImport";
 
 import { StudentService } from "../../services";
 
+import moment from "moment";
 
 import styles from "./styles.module.css";
 
@@ -43,14 +44,18 @@ const StudentList = () => {
   const [studentId, setStudentId] = useState({});
   const [socialName, setSocialName] = useState("");
   const [errorEdit, setErrorEdit] = useState(false);
+  const [currentData, setCurrentData] = useState({});
   const [modalError, setModalError] = useState(false);
   const [messageError, setMessageError] = useState({});
   const [importError, setImportError] = useState(false);
   const [successEdit, setSuccessEdit] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [expirationDate, setExpirationDate] = useState(null);
   const [openModalUpload, setOpenModalUpload] = useState(false);
   const [resultImportStudents, setResultImportStudents] = useState([]);
+  const [openModalEditInactivation, setOpenModalEditInactivation] = useState(false);
+  const [disabledUpdateExpirationDate, setDisabledUpdateExpirationDate] = useState(true);
 
   const getData = async ({ current, pageSize, name, status }) => {
     const query = {
@@ -72,6 +77,7 @@ const StudentList = () => {
         return {
           id: record?.id,
           name,
+          email: record?.email,
           inactivationSoon: record?.inactivationSoon,
           expirationDate: record?.expirationDate,
           status: record?.status,
@@ -126,12 +132,47 @@ const StudentList = () => {
     }
   }
 
+  const editInactivationDate = async () => {
+    if (!expirationDate || !currentData?.id) return;
+
+    const payload = { expirationDate };
+
+    setLoading(true);
+    try {
+      await StudentService.updateDateInactivation(payload, currentData?.id);
+    } catch (e) {
+      setMessageError({
+        type: "atualizar data de inativação",
+        text: "Erro inesperado. Tente novamente mais tarde!"
+      });
+      setModalError(true);
+    } finally {
+      setLoading(false);
+      setCurrentData({});
+      setDisabledUpdateExpirationDate(true);
+      setOpenModalEditInactivation(false);
+      tableRef.current.reload();
+    }
+  }
+
   const handleCloseModalError = () => setModalError(false);
   const handleCloseModalUpload = () => setOpenModalUpload(false);
 
   const handleOpenModalEdit = (record) => {
     setStudentId(record?.id);
     setOpenModalEdit(true);
+  }
+
+  const handleOpenEditInactivation = (record) => {
+    setCurrentData({ id: record?.id, email: record?.email, expirationDate: record?.expirationDate });
+    setOpenModalEditInactivation(true);
+  }
+
+  const handleCloseEditInactivation = () => {
+    setOpenModalEditInactivation(false);
+    setCurrentData({});
+    setExpirationDate(null);
+    setDisabledUpdateExpirationDate(true);
   }
 
   const handleCloseModalEdit = () => {
@@ -166,21 +207,37 @@ const StudentList = () => {
     setOpenModalEdit(false);
     setSuccessEdit(false);
   }
+
+  const handleExpirationDate = (_, dateString) => {
+    setExpirationDate(dateString || null);
+    setDisabledUpdateExpirationDate(!(!!dateString));
+  }
   
   const actionsTable = [
+    {
+      name: "Alterar Inativação",
+      func: handleOpenEditInactivation,
+      icon: <CalendarFilled />,
+    },
     {
       name: "Editar",
       func:  handleOpenModalEdit,
       icon: <EditFilled className="iconUpdate" />,
-    }
+    },
   ];
 
   const columns = [
     {
       title: "Nome",
       key: "name",
-      width: "auto",
+      width: "250px",
       dataIndex: "name",
+      ellipsis: true,
+    },
+    {
+      title: "E-mail",
+      dataIndex: "email",
+      width: "300px",
       ellipsis: true,
     },
     {
@@ -222,7 +279,7 @@ const StudentList = () => {
     {
       title: "Ações",
       valueType: "option",
-      width: "180px",
+      width: "300px",
       render: ({ props }) => <ActionTable actions={actionsTable} record={props.record} />,
     }
   ];
@@ -294,6 +351,45 @@ const StudentList = () => {
             value={socialName}
             onChange={handleEditSocialName}
           />
+        </div>
+      </Modal>
+
+      <Modal
+        visible={openModalEditInactivation}
+        buttons={[
+          {
+            text: "Fechar",
+            styles: "buttonDefault",
+            handleClick: handleCloseEditInactivation,
+          },
+          {
+            text: "Atualizar",
+            styles: "buttonBackground buttonMarginLeft",
+            disabled: disabledUpdateExpirationDate,
+            handleClick: editInactivationDate,
+          }
+        ]}
+        onCloseModal={handleCloseEditInactivation}
+      >
+        <div className="messageModalDelete">
+          <p style={{ marginBottom: 0 }}>A data de inativação do usuário <b>{currentData?.email}</b></p>
+          <p style={{ marginTop: 0 }}>é <b>{moment(currentData.expirationDate).format("DD/MM/YYYY")}</b>.</p>
+
+          <p>Para alterar essa data de inativação, faça a alteração abaixo e atualize:</p>
+
+          <div className={styles.dataPickerForm}>
+            <DatePicker
+              size="small"
+              format="DD/MM/YYYY"
+              defaultPickerValue={moment()}
+              disabledDate={(current) => {
+                const yearStart = moment().subtract(1, "year");
+                const yearEnd = moment().add(1, "year");
+                return !(yearStart.isSameOrBefore(current) && yearEnd.isAfter(current));
+              }}
+              onChange={handleExpirationDate} 
+            />
+          </div>
         </div>
       </Modal>
 

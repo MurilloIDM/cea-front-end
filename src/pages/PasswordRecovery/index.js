@@ -101,7 +101,7 @@ const PasswordRecovery = () => {
               message: "Por favor, insira a nova senha."
             },
             {
-              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])(?:([0-9a-zA-Z$*&@#])(?!\1)){8,}$/,
+              pattern: /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
               message: "A senha deve possuir no mínimo 8 caracteres com letras maiúsculas e minúsculas, números e" +
                 " caracteres como ($*&@#)."
             }

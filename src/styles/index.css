@@ -21,6 +21,11 @@ body {
   cursor: pointer;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+  filter: brightness(0.8);
+}
+
 .buttonPrimary {
   color: #fff;
   font-size: 14px;
@@ -189,4 +194,8 @@ body {
 
 .hidden {
   display: none;
+}
+
+.width-100 {
+  width: 100%;
 }

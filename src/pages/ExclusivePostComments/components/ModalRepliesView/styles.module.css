@@ -1,0 +1,36 @@
+.inputContainer {
+  position: sticky;
+  width: calc(80vw - 48px);
+  bottom: 0px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.dividerReplies {
+  margin: 0px 0px 8px 0px !important;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 80px;
+}
+
+.form {
+  display: flex;
+}
+
+.form>div:first-of-type {
+  flex-grow: 1;
+}
+
+.sendButton {
+  height: 32px;
+  display: flex;
+}
+
+.iconSend {
+  font-size: 16px;
+  align-self: center;
+}
